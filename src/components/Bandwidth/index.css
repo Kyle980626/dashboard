@@ -1,0 +1,8 @@
+.bandwidth {
+    padding: 0 30px;
+    flex: 1;
+}
+
+.vertical-line {
+    border-left: 1px solid #e5e5e5;
+}

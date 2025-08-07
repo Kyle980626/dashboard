@@ -1,0 +1,11 @@
+.arco-tabs-header-title-active {
+  border-top: 3px solid #0455c6 !important;
+}
+
+.arco-tabs {
+  padding-top: 10px;
+}
+
+.arco-tabs-header {
+  margin-left: 30px;
+}

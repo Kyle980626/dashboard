@@ -4,6 +4,8 @@ import BandwidthTable from "./BandwidthTable"
 import { useEffect, useRef } from "react"
 import dayjs from "dayjs"
 import * as echarts from 'echarts';
+import * as XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 
 const Charts = ({ select, setSelect, data, handleRefresh }) => {
   const chartRef = useRef(null)
@@ -87,6 +89,16 @@ const Charts = ({ select, setSelect, data, handleRefresh }) => {
     link.click()
   }
 
+  const downloadExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, '带宽数据')
+
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array'})
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream'})
+    saveAs(blob, '带宽数据.xlsx')
+  }
+
   useEffect(() => {
     if (!chartRef.current) return
 
@@ -97,7 +109,7 @@ const Charts = ({ select, setSelect, data, handleRefresh }) => {
   })
     return (
         <div className="charts-container content" style={{ width: '100%'}}>
-            <Toolbar select={select} setSelect={setSelect} downloadClick={handleDownload} refreshClick={handleRefresh}/>
+            <Toolbar select={select} setSelect={setSelect} downloadClick={handleDownload} refreshClick={handleRefresh} downloadTable={downloadExcel} />
             {
               select === 'table' ?
               <BandwidthTable data={data} /> : 

@@ -26,7 +26,15 @@ const options = [
     }
 ]
 
-const ToolBar = ({ select, setSelect, downloadClick, refreshClick }) => {
+const ToolBar = ({ select, setSelect, downloadClick, refreshClick, downloadTable }) => {
+    const handleDownload = () => {
+        if (select === 'table') {
+            downloadTable()
+        } else {
+            downloadClick()
+        }
+    }
+
     return (
         <div className='toolbar-container'>
             <div className='graph-selector-constainer'>
@@ -48,7 +56,7 @@ const ToolBar = ({ select, setSelect, downloadClick, refreshClick }) => {
             <div className='graph-btn-container'>
                 <Space size='large'>
                     <Button type='text' icon={<IconRefresh />} onClick={() => refreshClick()}>刷新</Button>
-                    <Button type='text' icon={<IconDownload />} onClick={() => downloadClick()}>下载</Button>
+                    <Button type='text' icon={<IconDownload />} onClick={() => handleDownload()}>下载</Button>
                 </Space>
             </div>
         </div>

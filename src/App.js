@@ -27,7 +27,6 @@ function App() {
   const fetchData = useCallback(async() => {
     try {
       const data = await fetchDataAPI(selectedProject, selectedTag, selectedDomain, selectedRegion, selectedProtocol, selectedTime, selectedTimeRange, selectedGranularity)
-      console.log(data)
       setData(data.data)
       setMaxDownload(data.maxDownload)
       setMaxUpload(data.maxUpload)

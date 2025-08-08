@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+// 模拟token
+const TOKEN = 'YOUR TOKEN'
+
 function createRequest(baseURL) {
     const instance = axios.create({
         baseURL,
@@ -7,8 +10,9 @@ function createRequest(baseURL) {
     })
 
     instance.interceptors.request.use(
+        // 请求头中添加token
         (config) => {
-            // TODO: 在请求拦截器中添加token
+            config.headers.Authorization = `Bearer ${TOKEN}`
             return config
         },
         (error) => {
@@ -17,11 +21,12 @@ function createRequest(baseURL) {
     )
 
     instance.interceptors.response.use(
+        // 解析返回的数据
         (response) => {
             return response.data
         },
         (error) => {
-            // TODO: 对error做出处理
+            // 错误处理逻辑
         }
     )
 

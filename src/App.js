@@ -3,11 +3,12 @@ import FilterArea from './features/FilterArea';
 import TabsComponent from './components/Tab';
 import Bandwidth from './components/Bandwidth';
 import '@arco-design/web-react/dist/css/arco.css';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { fetchUserInfo } from './store/modules/user';
 import { useDispatch } from 'react-redux';
 import { fetchDataAPI } from './apis/data';
 import Charts from './features/BandwidthView';
+import debounce from 'lodash.debounce'
 
 function App() {
   const [data, setData] = useState([])
@@ -35,13 +36,17 @@ function App() {
     }
   }, [selectedProject, selectedTag, selectedDomain, selectedRegion, selectedProtocol, selectedTime, selectedTimeRange, selectedGranularity])
 
-  const handleRefresh = () => {
-    fetchData()
-  }
+  const debouncedFetch = useMemo(() => debounce(fetchData, 1000), [fetchData])
 
   useEffect(() => {
-      fetchData()
-  }, [fetchData])
+    debouncedFetch()
+    return () => debouncedFetch.cancel()
+  }, [debouncedFetch, selectedProject, selectedTag, selectedDomain, selectedRegion, selectedProtocol, selectedTime, selectedTimeRange, selectedGranularity])
+
+  const handleRefresh = () => {
+    debouncedFetch.cancel()
+    fetchData()
+  }
 
   useEffect (() => {
     dispatch(fetchUserInfo())

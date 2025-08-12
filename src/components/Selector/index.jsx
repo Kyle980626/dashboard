@@ -14,6 +14,7 @@ const SelectorComponent = ({ item, mode, setSelectedData }) => {
             border: "1px solid #dedede",
             borderRadius: 5
         },
+        autoWidth: false,
         mode,
         onChange: (value) => {
             setSelectedData(value)
@@ -27,12 +28,13 @@ const SelectorComponent = ({ item, mode, setSelectedData }) => {
 
                 if (tagCount > 1) {
                     return index === 0 ? (
-                        <span style={{marginLeft: 8}}>{`已选择${tagCount}项`}</span>
+                        <span style={{marginLeft: 8, maxWidth: '50%'}}>{`已选择${tagCount}项`}</span>
                     ) : null
                 }
 
                 return (
                     <Tag
+                        size="small"
                         color="arcoblue"
                         closable={closable}
                         onClose={onClose}

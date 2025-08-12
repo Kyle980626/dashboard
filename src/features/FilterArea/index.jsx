@@ -44,7 +44,7 @@ const FilterArea = ({ selectedTimeRange, setSelectProject, setSelectTag, setSele
         
     }
     return (
-        info.projects ?
+        info?.projects ?
         <Space size="large" wrap align="start" className="content">
             <SelectorComponent item={info.projects} mode="multiple" setSelectedData={setSelectProject}/>
             <SelectorComponent item={info.tags} setSelectedData={setSelectTag}/>
@@ -65,6 +65,11 @@ const FilterArea = ({ selectedTimeRange, setSelectProject, setSelectTag, setSele
             </RadioGroup>
             <DatePicker.RangePicker 
                 style={{ width: 350 }} 
+                showTime={{
+                    defaultValue: ['00:00', '00:00'],
+                    format: 'HH:mm'
+                }}
+                format='YYYY-MM-DD HH:mm'
                 value={selectedTimeRange[0] && selectedTimeRange[1] ? [selectedTimeRange[0], selectedTimeRange[1]] : undefined}
                 onChange={(dateString, date) => setSelectTimeRange(dateString)} 
                 onSelect={(dateString, date) => console.log('onSelect: ', dateString, date)}
